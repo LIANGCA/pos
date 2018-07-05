@@ -5,7 +5,8 @@ function printReceipt(tags){
   let buyItemWithDetail = CalBuyItemWithDetail(buyMap,loadAllItems())
   let sum = buyItemSum(buyItemWithDetail);
   let savePrice = saveItemSum(buyItemWithDetail,sum);
-  return print(buyItemWithDetail,sum,savePrice);
+  let receipt = print(buyItemWithDetail,sum,savePrice);
+  console.log(receipt)
 }
 function CalculateByItems(tags){
   //let buyItems = new Array();
@@ -27,12 +28,6 @@ function CalculateByItems(tags){
       buyItemSet.add(key);
     }
   }
-
-  // for(var key in buyMap) {
-  //   var item = {branch: key, count: buyMap[key]}
-  //   buyItems.push(item);
-  // }
-
   return buyMap;
 }
 
@@ -46,7 +41,11 @@ function CalBuyItemWithDetail(buyMap,allItems){
          let count = buyMap[item.barcode];
          buyItem['count'] = count;
          buyItem['price'] = item.price;
+         if(loadPromotions()[0].barcodes.includes(item.barcode))
          buyItem['summary'] = item.price*(parseInt(count/3)*2+(count%3));
+         else{
+           buyItem['summary'] = item.price*parseFloat(count);
+         }
          buyItem['unit'] = item.unit;
          buyItemWithDetail.push(buyItem);
        }
