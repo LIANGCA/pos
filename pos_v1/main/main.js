@@ -1,16 +1,16 @@
 'use strict';
 
 function printReceipt(tags){
-  let buyMap =  CalculateByItems(tags);
-  let buyItemWithDetail = CalBuyItemWithDetail(buyMap,loadAllItems())
-  let sum = buyItemSum(buyItemWithDetail);
-  let savePrice = saveItemSum(buyItemWithDetail,sum);
-  let receipt = print(buyItemWithDetail,sum,savePrice);
+  let cartItemsMap =  CalculateByItemsNumber(tags);
+  let cartItemWithDetailArray = CalCartItemsWithDetail(cartItemsMap,loadAllItems())
+  let sum = cartItemSum(cartItemWithDetailArray);
+  let saveSum = saveItemSum(cartItemWithDetailArray, sum);
+  let receipt = generateReceipt(cartItemWithDetailArray,sum,saveSum);
   console.log(receipt)
 }
-function CalculateByItems(tags){
+function CalculateByItemsNumber(tags){
   //let buyItems = new Array();
-  let buyMap = {}
+  let cartItemsMap = {}
   let buyItemSet = new Set()
   for(let i = 0;i < tags.length;i++){
     let key,value;
@@ -22,23 +22,24 @@ function CalculateByItems(tags){
       value = 1;
     }
     if(buyItemSet.has(key)){
-      buyMap[key] = buyMap[key]+value;
+      cartItemsMap[key] = cartItemsMap[key]+value;
     }else{
-      buyMap[key] = value;
+      cartItemsMap[key] = value;
       buyItemSet.add(key);
     }
   }
-  return buyMap;
+  console.info(cartItemsMap)
+  return cartItemsMap;
 }
 
-function CalBuyItemWithDetail(buyMap,allItems){
+function CalCartItemsWithDetail(cartItemsMap, allItems){
   let buyItemWithDetail = new Array();
      for(let i= 0;i<allItems.length;i++){
        let item = allItems[i];
-       if(buyMap.hasOwnProperty(item.barcode)){
+       if(cartItemsMap.hasOwnProperty(item.barcode)){
          let buyItem = {};
          buyItem['name'] = item.name;
-         let count = buyMap[item.barcode];
+         let count = cartItemsMap[item.barcode];
          buyItem['count'] = count;
          buyItem['price'] = item.price;
          if(loadPromotions()[0].barcodes.includes(item.barcode))
@@ -53,29 +54,29 @@ function CalBuyItemWithDetail(buyMap,allItems){
      return buyItemWithDetail;
 }
 
-function buyItemSum(buyItemWithDetail){
+function cartItemSum(cartItemWithDetailArray){
   let sum = 0;
-  for(let i = 0;i<buyItemWithDetail.length;i++){
-    sum += buyItemWithDetail[i].summary;
+  for(let i = 0; i<cartItemWithDetailArray.length; i++){
+    sum += cartItemWithDetailArray[i].summary;
   }
   return sum;
 }
-function saveItemSum(buyItemWithDetail,sum){
+function saveItemSum(cartItemWithDetailArray, sum){
   let savePrice = parseInt(0);
-  for(let i = 0;i<buyItemWithDetail.length;i++){
-    savePrice += buyItemWithDetail[i].count*buyItemWithDetail[i].price;
+  for(let i = 0; i<cartItemWithDetailArray.length; i++){
+    savePrice += cartItemWithDetailArray[i].count*cartItemWithDetailArray[i].price;
   }
   savePrice  = savePrice - sum;
   return savePrice;
 }
 
-function print(buyItemWithDetail,sum,savePrice){
+function generateReceipt(buyItemWithDetail, sum, saveSum){
   let receipt = '***<没钱赚商店>收据***\n'
   for(let i= 0;i<buyItemWithDetail.length;i++) {
     let item = buyItemWithDetail[i];
     receipt += '名称：' + item.name + '，数量：' + item.count + item.unit + '，单价：' + item.price.toFixed(2) + '(元)，小计：' + item.summary.toFixed(2) + '(元)\n'
   }
-  receipt+='----------------------\n总计：'+sum.toFixed(2)+'(元)\n节省：'+savePrice.toFixed(2)+'(元)\n**********************';
+  receipt+='----------------------\n总计：'+sum.toFixed(2)+'(元)\n节省：'+saveSum.toFixed(2)+'(元)\n**********************';
     return receipt;
   }
 
