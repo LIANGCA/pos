@@ -71,12 +71,14 @@ function saveItemSum(cartItemWithDetailArray, sum){
 }
 
 function generateReceipt(buyItemWithDetail, sum, saveSum){
-  let receipt = '***<没钱赚商店>收据***\n'
+  let receipt = `***<没钱赚商店>收据***`
   for(let i= 0;i<buyItemWithDetail.length;i++) {
-    let item = buyItemWithDetail[i];
-    receipt += '名称：' + item.name + '，数量：' + item.count + item.unit + '，单价：' + item.price.toFixed(2) + '(元)，小计：' + item.summary.toFixed(2) + '(元)\n'
+    receipt +=`\n名称：${buyItemWithDetail[i].name}，数量：${buyItemWithDetail[i].count}${buyItemWithDetail[i].unit}，单价：${buyItemWithDetail[i].price.toFixed(2)}(元)，小计：${buyItemWithDetail[i].summary.toFixed(2)}(元)`
   }
-  receipt+='----------------------\n总计：'+sum.toFixed(2)+'(元)\n节省：'+saveSum.toFixed(2)+'(元)\n**********************';
+ receipt+=`\n----------------------
+总计：${sum.toFixed(2)}(元)
+节省：${saveSum.toFixed(2)}(元)
+**********************`
     return receipt;
   }
 
