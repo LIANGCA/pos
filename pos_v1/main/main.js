@@ -25,6 +25,9 @@ function buildBuyItem(barcode, cartItemsMap) {
   }
 }
 
+
+
+
 function calculateByItemsNumber(tags) {
   let cartItemsMap = {};
   for (let barcode of tags) {
