@@ -1,12 +1,12 @@
 'use strict';
 
-describe('CalCartItemsWithDetail', () => {
+describe('calCartItemsWithDetail', () => {
   it('should print array', () => {
 
     const cartItemsMap = {ITEM000000:3,ITEM000001:2};
     const allItems = loadAllItems();
 
-    let buyItemWithDetail = JSON.stringify( CalCartItemsWithDetail(cartItemsMap,allItems))
+    let buyItemWithDetail = JSON.stringify( calCartItemsWithDetail(cartItemsMap,allItems))
 
 
     const expectText = JSON.stringify(

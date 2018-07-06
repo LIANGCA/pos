@@ -1,6 +1,6 @@
 'use strict';
 
-describe('CalculateByItemsNumber', () => {
+describe('calculateByItemsNumber', () => {
   it('should print map', () => {
 
     const tags = [
@@ -14,7 +14,7 @@ describe('CalculateByItemsNumber', () => {
       'ITEM000005-2',
     ];
 
-    let cartItemsMap = JSON.stringify(CalculateByItemsNumber(tags));
+    let cartItemsMap = JSON.stringify(calculateByItemsNumber(tags));
 
     const expectText = JSON.stringify({ITEM000000:2,ITEM000001:3,ITEM000003:2.5,ITEM000005:3});
 
