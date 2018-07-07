@@ -1,7 +1,6 @@
 'use strict';
 
 describe('pos', () => {
-
   it('should print text', () => {
 
     const tags = [
@@ -30,4 +29,8 @@ describe('pos', () => {
 
     expect(console.log).toHaveBeenCalledWith(expectText);
   });
+
 });
+
+
+
