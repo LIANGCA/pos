@@ -8,6 +8,8 @@ function printReceipt(tags){
   let receipt = print(buyItemWithDetail,sum,savePrice);
   console.log(receipt)
 }
+
+
 function CalculateByItems(tags){
   //let buyItems = new Array();
   let buyMap = {}
