@@ -9,6 +9,7 @@ function printReceipt(tags) {
   console.log(receipt);
 }
 
+
 function buildBuyItem(barcode, cartItemsMap) {
   let key,value;
   if (barcode.indexOf('-') > -1) {
@@ -22,6 +23,7 @@ function buildBuyItem(barcode, cartItemsMap) {
     cartItemsMap[key] += value;
   } else {
     cartItemsMap[key] = value;
+
   }
 }
 
